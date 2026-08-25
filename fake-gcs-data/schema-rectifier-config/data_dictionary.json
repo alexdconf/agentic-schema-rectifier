@@ -1,0 +1,103 @@
+[
+    {
+        "term": "cust_id",
+        "standard_name": "customer_id",
+        "description": "Unique alphanumeric identifier assigned to a customer account.",
+        "data_type": "string",
+        "synonyms": [
+            "client_id",
+            "account_number",
+            "cust_no",
+            "user_id"
+        ],
+        "example": "CUST-98432"
+    },
+    {
+        "term": "first_nm",
+        "standard_name": "first_name",
+        "description": "The legal given name of an individual customer.",
+        "data_type": "string",
+        "synonyms": [
+            "fname",
+            "given_name",
+            "cust_fname"
+        ],
+        "example": "Jane"
+    },
+    {
+        "term": "last_nm",
+        "standard_name": "last_name",
+        "description": "The surname or family name of an individual customer.",
+        "data_type": "string",
+        "synonyms": [
+            "lname",
+            "surname",
+            "family_name"
+        ],
+        "example": "Doe"
+    },
+    {
+        "term": "email_addr",
+        "standard_name": "email",
+        "description": "Primary electronic mail address used for communication and notifications.",
+        "data_type": "string",
+        "synonyms": [
+            "electronic_mail",
+            "cust_email",
+            "mail_address"
+        ],
+        "example": "jane.doe@example.com"
+    },
+    {
+        "term": "txn_amt",
+        "standard_name": "transaction_amount",
+        "description": "Total monetary value of the transaction in USD before tax and discounts.",
+        "data_type": "decimal",
+        "synonyms": [
+            "order_total",
+            "total_price",
+            "purchase_amount",
+            "gross_amount"
+        ],
+        "example": 149.99
+    },
+    {
+        "term": "txn_ts",
+        "standard_name": "transaction_timestamp",
+        "description": "UTC timestamp indicating exactly when the transaction was completed.",
+        "data_type": "timestamp",
+        "synonyms": [
+            "order_date",
+            "created_at",
+            "purchase_time",
+            "event_timestamp"
+        ],
+        "example": "2026-08-19T14:05:20Z"
+    },
+    {
+        "term": "pstl_cd",
+        "standard_name": "postal_code",
+        "description": "Postal or ZIP code associated with the customer billing or shipping address.",
+        "data_type": "string",
+        "synonyms": [
+            "zip_code",
+            "postcode",
+            "zip",
+            "billing_zip"
+        ],
+        "example": "94105"
+    },
+    {
+        "term": "st_cd",
+        "standard_name": "state_code",
+        "description": "Two-letter ISO state or province code for the customer address.",
+        "data_type": "string",
+        "synonyms": [
+            "state",
+            "province",
+            "cust_state",
+            "region_code"
+        ],
+        "example": "CA"
+    }
+]

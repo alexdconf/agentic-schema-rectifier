@@ -1,0 +1,4 @@
+client_id,fname,last_name,mail_address,total_price,transaction_timestamp,zip,region_code
+CUST-10001,John,Smith,john.smith@example.com,59.99,2026-08-20T10:00:00Z,10001,NY
+CUST-10002,Jane,Doe,jane.doe@test.org,149.99,2026-08-20T11:30:00Z,94105,CA
+CUST-10003,Alice,Johnson,alice@corp.net,299.50,2026-08-21T09:15:22Z,73301,TX

@@ -1,0 +1,12 @@
+{
+    "state_code": "standard_schema",
+    "version": "0.0.1",
+    "standard_schema": [
+        "state_code",
+        "postal_code",
+        "customer_id",
+        "email",
+        "transaction_amount",
+        "transaction_timestamp"
+    ]
+}

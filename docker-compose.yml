@@ -1,0 +1,87 @@
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: schema_staging
+    ports:
+      - "5432:5432"
+
+  agent-api:
+    build: 
+      context: .
+      dockerfile: agent_api/Dockerfile
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/schema_staging
+      # Routes out of the Docker network to your Mac's native Ollama instance
+      - FIRESTORE_PROJECT=schema-rectifier-local
+      - FIRESTORE_EMULATOR_HOST=firestore-emulator:8080
+      - STORAGE_EMULATOR_HOST=http://gcs-emulator:4443
+      - DATA_DICTIONARY_BUCKET=schema-rectifier-config
+      - DATA_DICTIONARY_FILE=data_dictionary.json
+      - STANDARD_SCHEMA_BUCKET=schema-rectifier-config
+      - STANDARD_SCHEMA_FILE=standard_schema.json
+      - LLM_API_URL=http://llm-runtime:11434/api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - firestore-emulator
+      - gcs-emulator
+      - llm-runtime
+
+  streamlit-ui:
+    build: 
+      context: .
+      dockerfile: streamlit_ui/Dockerfile
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/schema_staging
+      - FIRESTORE_PROJECT=schema-rectifier-local
+      - FIRESTORE_EMULATOR_HOST=firestore-emulator:8080
+      - STORAGE_EMULATOR_HOST=http://gcs-emulator:4443
+      - AGENT_API_URL=http://agent-api:8000
+    ports:
+      - "8501:8501"
+    depends_on:
+      - db
+      - firestore-emulator
+
+  gcs-emulator:
+    image: fsouza/fake-gcs-server:latest
+    ports:
+      - "4443:4443"
+    command: -scheme http -data /storage -filesystem-root /storage
+    volumes:
+      - ./fake-gcs-data:/storage
+
+  firestore-emulator:
+    image: mtlynch/firestore-emulator-docker
+    environment:
+      - FIRESTORE_PROJECT_ID=schema-rectifier-local
+    ports:
+      - "8081:8080"
+
+  cloud-function:
+    build: 
+      context: .
+      dockerfile: cloud_function/Dockerfile
+    environment:
+      - OUTPUT_BUCKET=schema-rectifier-output
+      - AGENT_API_URL=http://agent-api:8000
+      - STORAGE_EMULATOR_HOST=http://gcs-emulator:4443
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - gcs-emulator
+      - firestore-emulator
+      
+  llm-runtime:
+    image: ollama/ollama
+    volumes:
+      - ./ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    entrypoint: /bin/sh
+    command: -c "ollama serve & sleep 5 && ollama pull llama3.1 && wait"
