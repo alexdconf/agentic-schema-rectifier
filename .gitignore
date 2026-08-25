@@ -54,3 +54,7 @@ Thumbs.db
 
 # Google Cloud Storage
 *.bucketMetadata
+fake-gcs-data/*/*.metadata
+
+# Demo Data
+example_rectified.csv

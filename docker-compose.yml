@@ -51,7 +51,7 @@ services:
     image: fsouza/fake-gcs-server:latest
     ports:
       - "4443:4443"
-    command: -scheme http -data /storage -filesystem-root /storage
+    command: -scheme http -data /storage -filesystem-root /storage -external-url http://gcs-emulator:4443
     volumes:
       - ./fake-gcs-data:/storage
 
