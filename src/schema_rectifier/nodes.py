@@ -90,12 +90,18 @@ def load(state: State):
     LOG_LABEL = "[load]"
     input_uri = state.get("input_gcs_uri")
     output_uri = state.get("output_gcs_uri", "")
+    
+    if not output_uri and input_uri:
+        _, in_blob_name = _parse_gcs_uri(input_uri)
+        output_uri = f"gs://{OUTPUT_BUCKET}/{in_blob_name}"
+
     # Ensure output_uri ends with _rectified.csv
     if not output_uri.endswith("_rectified.csv"):
         if output_uri.endswith(".csv"):
             output_uri = output_uri[:-4] + "_rectified.csv"
         else:
             output_uri = output_uri.rstrip("/") + "_rectified.csv"
+
     column_mappings = state.get("column_mappings", [])
     
     if not input_uri or not output_uri:
