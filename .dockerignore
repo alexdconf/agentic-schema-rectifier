@@ -1,0 +1,24 @@
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Git metadata
+.git/
+.gitignore
+
+# OS & IDE Files
+.DS_Store
+.vscode/
+.idea/
+
+# Large data/logs (adjust as needed)
+*.log
+*.sqlite
